@@ -2,11 +2,9 @@
 
 namespace app\admin\controller;
 use think\Db;
-
 class Test{
 
     public function test(){
-        // dump(1);die;
         // $a = level();
         // dump($a);
         $success = 0;

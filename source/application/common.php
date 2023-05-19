@@ -463,6 +463,9 @@ function reward_settlement($order_id){
         // dump($now_order);die;
     }
 }
+/**
+ * 写入管理员日志
+ */
 function admin_log($log_info){
     $data = [
                 'admin_id' =>$_SESSION['yoshop_store']['user']['store_user_id'],

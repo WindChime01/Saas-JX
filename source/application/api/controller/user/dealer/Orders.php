@@ -45,7 +45,6 @@ class Orders extends Controller
      */
     public function lists($settled = -1)
     {
-        // dump(1);die;
         // $model = new OrderModel;
        
         $data = $_GET;

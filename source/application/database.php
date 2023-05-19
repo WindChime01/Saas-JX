@@ -2,11 +2,11 @@
 
 // 数据库配置
 $config = [
-    'host' => '127.0.0.1',
+    'host' => 'localhost',
     'database' => 'saas_test',
-    'username' => 'saas_test',
-    'password' => 'tftriCiF3Ef2fNRt',
-    'port' => '3306',
+    'username' => 'root',
+    'password' => 'root',
+    'port' => '3316',
     'charset' => 'utf8',
 ];
 

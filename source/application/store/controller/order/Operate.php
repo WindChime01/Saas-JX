@@ -36,6 +36,7 @@ class Operate extends Controller
      */
     public function export($dataType)
     {
+		dump($this->request->param());die;
         admin_log('导出订单');
         return $this->model->exportList($dataType, $this->request->param());
     }

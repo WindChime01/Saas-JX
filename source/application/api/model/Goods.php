@@ -134,6 +134,7 @@ class Goods extends GoodsModel
      */
     private function setGoodsListDataFromApi(&$data, $isMultiple, $param)
     {
+        
         return parent::setGoodsListData($data, $isMultiple, function ($goods) use ($param) {
             // 计算并设置商品会员价
             $this->setGoodsGradeMoney($param['userInfo'], $goods);
@@ -147,6 +148,7 @@ class Goods extends GoodsModel
      */
     private function setGoodsGradeMoney($user, &$goods)
     {
+        // dump($goods);
         // 会员等级状态
         $gradeStatus = (!empty($user) && $user['grade_id'] > 0 && !empty($user['grade']))
             && (!$user['grade']['is_delete'] && $user['grade']['status']);
@@ -157,16 +159,21 @@ class Goods extends GoodsModel
         }
         $discountRatio = 0;
         // 商品单独设置了会员折扣
-        if ($goods['is_alone_grade'] && isset($goods['alone_grade_equity'][$user['grade_id']])) {
+        if ($goods['is_alone_grade'] && isset($goods['alone_grade_equity'][$user['grade_id']]) && !$goods['alone_grade_equity'][$user['grade_id']] == 0) {
             // 折扣比例
             if($goods['alone_grade_type']==10){
                 $discountRatio = helper::bcdiv($goods['alone_grade_equity'][$user['grade_id']], 10);            //百分比折扣
+                // dump($discountRatio);
             }else{
                  $fix = $goods['alone_grade_equity'][$user['grade_id']];          //固定值折扣
             }
         } else {
             // 折扣比例
+            if(!$goods['alone_grade_equity'][$user['grade_id']] == 0){
             $discountRatio = helper::bcdiv($user['grade']['equity']['discount'], 10);
+            }else{
+                $discountRatio = 1;
+            }
         }
         // dump($discountRatio);die;
         if ($discountRatio > 0) {
