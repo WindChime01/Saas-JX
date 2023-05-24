@@ -521,12 +521,13 @@ class Checkout
             }
             if ($fix > 0) {
                 // 会员折扣后的商品总金额
+                // dump($goods);
+                $gradeTotalPrice = $goods['total_num'] * $fix;
                 helper::setDataAttribute($goods, [
                     'is_user_grade' => true,
-                    'grade_ratio' => $discountRatio,
-                    'grade_goods_price' => helper::number2(helper::bcmul($goods['goods_price'], $discountRatio), true),
-                    'grade_total_money' => helper::number2(helper::bcsub($goods['total_price'], $fix)),
-                    'total_price' => $fix,
+                    'grade_goods_price' => $fix,
+                    'grade_total_money' => helper::number2(helper::bcsub($goods['total_price'], $gradeTotalPrice)),
+                    'total_price' => $gradeTotalPrice,
                 ], false);
             }
         }

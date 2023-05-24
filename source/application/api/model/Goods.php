@@ -157,9 +157,8 @@ class Goods extends GoodsModel
             $goods['is_user_grade'] = false;
             return;
         }
-        $discountRatio = 0;
         // 商品单独设置了会员折扣
-        if ($goods['is_alone_grade'] && isset($goods['alone_grade_equity'][$user['grade_id']]) && !$goods['alone_grade_equity'][$user['grade_id']] == 0) {
+        if ($goods['is_alone_grade'] == 1 && isset($goods['alone_grade_equity'][$user['grade_id']]) && !$goods['alone_grade_equity'][$user['grade_id']] == 0) {
             // 折扣比例
             if($goods['alone_grade_type']==10){
                 $discountRatio = helper::bcdiv($goods['alone_grade_equity'][$user['grade_id']], 10);            //百分比折扣
@@ -169,21 +168,21 @@ class Goods extends GoodsModel
             }
         } else {
             // 折扣比例
-            if(!$goods['alone_grade_equity'][$user['grade_id']] == 0){
+            if($goods['is_alone_grade'] == 0){
             $discountRatio = helper::bcdiv($user['grade']['equity']['discount'], 10);
             }else{
                 $discountRatio = 1;
             }
         }
         // dump($discountRatio);die;
-        if ($discountRatio > 0) {
+        if (isset($discountRatio)) {
             // 标记参与会员折扣
             $goods['is_user_grade'] = true;
             // 会员折扣价
             foreach ($goods['sku'] as &$skuItem) {
                 $skuItem['goods_price'] = helper::number2(helper::bcmul($skuItem['goods_price'], $discountRatio), true);
             }
-        }else {
+        }else{
             // 标记参与会员折扣
             $goods['is_user_grade'] = true;
             // 会员折扣价
