@@ -148,7 +148,6 @@ class Goods extends GoodsModel
      */
     private function setGoodsGradeMoney($user, &$goods)
     {
-        // dump($goods);
         // 会员等级状态
         $gradeStatus = (!empty($user) && $user['grade_id'] > 0 && !empty($user['grade']))
             && (!$user['grade']['is_delete'] && $user['grade']['status']);
